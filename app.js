@@ -1,18 +1,26 @@
 // import useful node libraries 
-var createError = require('http-errors');
-var express = require('express');
+let createError = require('http-errors');
+let express = require('express');
 /**
  * A core Node library for parsing file and directory paths.
  */
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
 
 // 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
 
-var app = express();
+let app = express();
+//Set up mongoose connection
+let mongoose = require('mongoose');
+const { PRIVATEDATA } = require('./private-data-do-not-steal');
+
+let mongoDB = PRIVATEDATA.url;
+mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,7 +39,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
