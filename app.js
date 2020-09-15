@@ -1,6 +1,6 @@
 // import useful node libraries 
-let createError = require('http-errors');
-let express = require('express');
+const createError = require('http-errors');
+const express = require('express');
 /**
  * A core Node library for parsing file and directory paths.
  */
@@ -9,13 +9,15 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 
 // 
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const wiki = require("./wiki.js");
+const catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 
-let app = express();
+const app = express();
 //Set up mongoose connection
 let mongoose = require('mongoose');
-const { PRIVATEDATA } = require('./private-data-do-not-steal');
+const PRIVATEDATA = require('./private-data-do-not-steal');
 
 let mongoDB = PRIVATEDATA.url;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
@@ -37,6 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // add our (previously imported) route-handling code to the request handling chain. The imported code will define particular routes for the different parts of the site:
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use("/wiki", wiki);
+app.use('/catalog', catalogRouter);  // Add catalog routes to middleware chain.
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

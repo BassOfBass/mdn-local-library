@@ -1,16 +1,43 @@
-class Guest {};
+class FullName {
+  constructor(order, firstName, lastName, middleName) {
+    this.order = order;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.middleName = middleName;
+  }
 
-class User {
-  constructor(email, password) {
-    this.email;
-    this.password;
+  get fullName() {}
+}
+
+class Guest {
+  constructor(email) {
+    this.email = email;
   }
 };
 
-class PowerUser extends User {};
+class User extends Guest {
+  constructor(email, password) {
+    super(email);
+    this.password = password;
+  }
+};
 
-class Admin {};
+class PowerUser extends User {
+  constructor(email, password, fullName) {
+    super(email, password);
+    this.fullName = fullName;
+  }
+};
 
-class SuperAdmin extends Admin {};
+class Admin extends PowerUser {
+  constructor() {}
+};
 
-class Founder {};
+class SuperAdmin extends Admin {
+  constructor() {}
+};
+
+class Founder extends SuperAdmin {
+  constructor() {}
+};
+
