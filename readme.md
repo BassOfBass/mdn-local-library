@@ -1,8 +1,14 @@
 SET DEBUG=mdn-express-server:* & npm start
-SET DEBUG=mdn-express-server:* & npm run devstart
 
-TODO: rewrite in ES6 modules.
+SET DEBUG=mdn-express-server:* & npm run devstart - nodemon dev launch
 
+TODOs:
+<ul>
+  <li>append &lt;time&gt; tags with datetime="YYYY-MM-DDTHH:MM:SS.mmm-timezone" where possible.</li>
+  <li>rewrite in ES6 modules.</li>
+</ul>
+
+Structure:
 <ul>
  <li>
   <code>catalog/</code> — The home/index page.

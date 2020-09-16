@@ -1,3 +1,4 @@
+const moment = require("moment");
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -16,6 +17,12 @@ BookInstanceSchema
 .virtual('url')
 .get(() => {
   return '/catalog/bookinstance/' + this._id;
+});
+
+BookInstanceSchema
+.virtual("due_back_formatted")
+.get(() => {
+  return moment(this.due_back).format("Do MMMM, YYYY");
 });
 
 //Export model

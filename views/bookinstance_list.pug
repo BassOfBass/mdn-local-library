@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1= title
-
+  
   ul
     each val in bookinstance_list
       li 
@@ -14,7 +14,8 @@ block content
         else
           span.text-warning #{val.status} 
         if val.status!='Available'
-          span  (Due: #{val.due_back} )
+          //- TODO: apply <time datetime="YYYY-MM-DDTHH:MM:SS.mmm-timezone">
+          span  (Due: #{val.due_back_formatted} ) 
 
     else
       li There are no book copies in this library.
