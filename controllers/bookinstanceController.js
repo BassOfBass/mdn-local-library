@@ -4,12 +4,12 @@ const BookInstance = require('../models/bookinstance');
 exports.bookinstance_list = (req, res, next) => {
 
   BookInstance.find()
-    .populate('book')
-    .exec((err, list_bookinstances) => {
-      if (err) { return next(err); }
-      // Successful, so render
-      res.render('bookinstance_list', { title: 'Book Instance List', bookinstance_list: list_bookinstances });
-    });
+  .populate('book')
+  .exec((err, list_bookinstances) => {
+    if (err) { return next(err); }
+    // Successful, so render
+    res.render('bookinstance_list', { title: 'Book Instance List', bookinstance_list: list_bookinstances });
+  });
 
 };
 

@@ -1,5 +1,5 @@
-const moment = require("moment");
 const mongoose = require('mongoose');
+const moment = require("moment");
 const Schema = mongoose.Schema;
 
 const BookInstanceSchema = new Schema(
@@ -15,13 +15,13 @@ const BookInstanceSchema = new Schema(
 // Virtual for bookinstance's URL
 BookInstanceSchema
 .virtual('url')
-.get(() => {
+.get( function() {
   return '/catalog/bookinstance/' + this._id;
 });
 
 BookInstanceSchema
 .virtual("due_back_formatted")
-.get(() => {
+.get( function() {
   return moment(this.due_back).format("Do MMMM, YYYY");
 });
 
