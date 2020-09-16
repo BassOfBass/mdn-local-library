@@ -8,10 +8,10 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 
-// 
+// establish routers
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const wiki = require("./wiki.js");
+const wikiRouter = require("./wiki.js");
 const catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 
 const app = express();
@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // add our (previously imported) route-handling code to the request handling chain. The imported code will define particular routes for the different parts of the site:
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use("/wiki", wiki);
+app.use("/wiki", wikiRouter);
 app.use('/catalog', catalogRouter);  // Add catalog routes to middleware chain.
 
 // catch 404 and forward to error handler
