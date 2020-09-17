@@ -4,6 +4,7 @@ SET DEBUG=mdn-express-server:* & npm run devstart - nodemon dev launch
 
 TODOs:
 <ul>
+  <li>rework forms.</li>
   <li>append &lt;time&gt; tags with datetime="YYYY-MM-DDTHH:MM:SS.mmm-timezone" where possible.</li>
   <li>rewrite in ES6 modules.</li>
 </ul>
