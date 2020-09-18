@@ -16,7 +16,7 @@ const catalogRouter = require('./routes/catalog');  //Import routes for "catalog
 
 const app = express();
 //Set up mongoose connection
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const PRIVATEDATA = require('./private-data-do-not-steal');
 
 let mongoDB = PRIVATEDATA.url;
