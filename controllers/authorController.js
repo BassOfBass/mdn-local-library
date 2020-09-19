@@ -66,8 +66,6 @@ exports.author_create_get = (req, res, next) => {
 
 /**
  * Handle Author create on POST.
- * 
- * TODO: check for Author duplicates before submit.
  */
 exports.author_create_post = [
 

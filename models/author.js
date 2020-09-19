@@ -49,7 +49,6 @@ AuthorSchema
   let birth = moment(this.date_of_birth).format("Do MMMM, YYYY");
   let death = moment(this.date_of_death).format("Do MMMM, YYYY");
   
-  
   if (this.date_of_birth && this.date_of_death) {
     let age = this.date_of_death.getFullYear() - this.date_of_birth.getFullYear();
 
@@ -67,7 +66,7 @@ AuthorSchema
   }
 
   return "Dates unknown";
-})
+});
 
 //Export model
 module.exports = mongoose.model('Author', AuthorSchema);
