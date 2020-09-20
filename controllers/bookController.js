@@ -367,7 +367,7 @@ exports.book_update_post = [
   (req, res, next) => {
 
     /** Validayion errors extracted from a request. */
-    const errors = validationResult(req);
+    const errors = validator.validationResult(req);
 
     /** A Book object with escaped/trimmed data and old id. */
     const book = new Book({ 
