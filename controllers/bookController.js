@@ -113,10 +113,7 @@ exports.book_create_get = (req, res, next) => {
   });
 };
 
-/**
- * Handle book create on POST.
- * TODO: recheck instructions at https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/forms/Create_book_form#Controller—post_route
- */
+/** Handle book create on POST. */
 exports.book_create_post = [
 
   // Convert the genre to an array.
@@ -209,14 +206,79 @@ exports.book_create_post = [
   }
 ];
 
-// Display book delete form on GET.
-exports.book_delete_get = (req, res) => {
-  res.send('NOT IMPLEMENTED: Book delete GET');
+/**
+ * Display book delete form on GET.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.book_delete_get = (req, res, next) => {
+  async.parallel({
+    book: (callback) => {
+      Book.findById(req.params.id).populate("author").populate("genre").exec(callback);
+    },
+    book_bookinstances: (callback) => {
+      BookInstance.find({ "book": req.params.id }).exec(callback);
+    },
+  }, (err, results) => {
+
+    if (err) { return next(err) };
+
+    if (results.book == null) { // no results
+      res.redirect("catalog/books");
+    }
+
+    // successful, so render
+    res.render("book_delete", {
+      title: "Delete Book",
+      book: results.book,
+      book_instances: results.book_bookinstances
+    });
+  });
 };
 
-// Handle book delete on POST.
-exports.book_delete_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: Book delete POST');
+/**
+ * Handle book delete on POST.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.book_delete_post = (req, res, next) => {
+  // assume the post has valid id (ie no validation/sanitization)
+  async.parallel({
+    book: (callback) => {
+      Book.findById(req.body.id).populate("author").populate("genre").exec(callback);
+    },
+    book_bookinstances: (callback) => {
+      BookInstance.find({ "book": req.body.id }).exec(callback);
+    },
+  }, (err, results) => {
+
+    if (err) { return next(err); }
+
+    // success
+    if (results.book_bookinstances.length > 0) {
+      // Book has book_instances, render as GET route
+      res.render("book_delete", {
+        title: "Delete Book",
+        book: results.book,
+        book_instances: results.book_bookinstances
+      });
+
+      return;
+
+    } else {
+      // Book has no BookInstance objects
+      // delete object and redirect to the list of books
+      Book.findByIdAndRemove(req.body.id, (err) => {
+
+        if (err) { return next(err); }
+
+        // success, go to book list`
+        res.redirect("/catalog/books");
+      });
+    }
+  });
 };
 
 /**
@@ -270,9 +332,7 @@ exports.book_update_get = (req, res, next) => {
   });
 };
 
-/**
- * Handle book update on POST.
- */
+/** Handle book update on POST */
 exports.book_update_post = [
 
   // Convert the genre to an array
