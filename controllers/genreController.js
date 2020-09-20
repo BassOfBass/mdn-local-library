@@ -1,7 +1,7 @@
-const Genre = require('../models/genre');
-const Book = require('../models/book');
 const async = require('async');
 const validator = require('express-validator');
+const Genre = require('../models/genre');
+const Book = require('../models/book');
 
 /**
  * Display list of all Genre.
@@ -63,11 +63,7 @@ exports.genre_create_get = (req, res, next) => {
   res.render('genre_form', { title: 'Create Genre' });
 };
 
-/**
- * Handle Genre create on POST.
- * @param {*} req 
- * @param {*} res 
- */
+/** Handle Genre create on POST. */
 exports.genre_create_post = [
 
   // Validate that the name field is not empty.
@@ -115,22 +111,82 @@ exports.genre_create_post = [
   }
 ];
 
-// Display Genre delete form on GET.
-exports.genre_delete_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Genre delete GET');
+/**
+ * Display Genre delete form on GET.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.genre_delete_get = (req, res, next) => {
+  async.parallel({
+    genre: (callback) => {
+      Genre.findById(req.params.id).exec(callback);
+    },
+    genre_books: (callback) => {
+      Book.find({ "genre": req.params.id }).exec(callback);
+    },
+  }, (err, results) => {
+
+    if (err) { return next(err) };
+
+    if (results.genre == null) { // no results
+      res.redirect("catalog/genres");
+    }
+
+    // successful, so render
+    res.render("genre_delete", {
+      title: "Delete Genre",
+      genre: results.genre,
+      genre_books: results.genre_books
+    });
+  });
 };
 
-// Handle Genre delete on POST.
-exports.genre_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Genre delete POST');
+/**
+ * Handle Genre delete on POST.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.genre_delete_post = (req, res, next) => {
+  async.parallel({
+    genre: (callback) => {
+      Genre.findById(req.params.id).exec(callback);
+    },
+    genre_books: (callback) => {
+      Book.find({ "genre": req.params.id }).exec(callback);
+    },
+  }, (err, results) => {
+
+    if (err) { return next(err) };
+
+    // success
+    if (results.genre_books.length > 0) {
+      // Genre has books, render the same way as GET route
+      res.render("genre_delete", {
+        title: "Delete Genre",
+        genre: results.genre,
+        genre_books: results.genre_books
+      });
+    } else {
+      // Genre has no books, delete object and redirect to the list of genres
+      Genre.findByIdAndRemove(req.body.id, (err) => {
+
+        if (err) { return next(err); }
+
+        // success, go to genre list
+        res.redirect("/catalog/genres");
+      });
+    }
+  });
 };
 
 // Display Genre update form on GET.
-exports.genre_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Genre update GET');
+exports.genre_update_get = (req, res) => {
+  res.send('NOT IMPLEMENTED: Genre update GET');
 };
 
 // Handle Genre update on POST.
-exports.genre_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Genre update POST');
+exports.genre_update_post = (req, res) => {
+  res.send('NOT IMPLEMENTED: Genre update POST');
 };

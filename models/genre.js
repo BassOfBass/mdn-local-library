@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 /**
- * The model should have a String SchemaType called `name` to describe the genre.
+ * The model should have a `String` `SchemaType` called `name` to describe the genre.
  * 
  * This name should be required and have between 3 and 100 characters.
  */
