@@ -181,12 +181,72 @@ exports.genre_delete_post = (req, res, next) => {
   });
 };
 
-// Display Genre update form on GET.
-exports.genre_update_get = (req, res) => {
-  res.send('NOT IMPLEMENTED: Genre update GET');
+/**
+ * Display Genre update form on GET.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.genre_update_get = (req, res, next) => {
+  Genre.findById(req.params.id, (err, genre) => {
+
+    if (err) { return next(err); }
+
+    if (genre == null) { // no results
+      const err = new Error("Genre not found");
+      err.status = 404;
+
+      return next(err);
+    }
+
+    // success
+    res.render("genre_form", {
+      title: "Update Genre",
+      genre: genre
+    });
+  });
 };
 
-// Handle Genre update on POST.
-exports.genre_update_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: Genre update POST');
-};
+/** Handle Genre update on POST. */
+exports.genre_update_post = [
+  // ensure the name field is not empty
+  validator.body("name", "Genre name required")
+  .isLength({ min: 1 })
+  .trim(),
+
+  // sanitize (escape) the name field
+  validator.sanitizeBody("name").escape(),
+
+  // process request after validation and sanitization
+  (req, res, next) => {
+    /** Validation errors extracted from a request. */
+    const errors = validator.validationResult(req);
+    /** A genre object with escaped and trimmed data (and the old id!) */
+    const genre = new Genre({
+      name: req.body.name,
+      _id: req.params.id
+    });
+
+    if ( !errors.isEmpty() ) {
+      // there are errors
+      // render the form again with sanitized values and error messages
+      res.render("genre_form", {
+        title: "Update Genre",
+        genre: genre,
+        errors: errors.array()
+      });
+
+      return;
+
+    } else {
+      // data from form is valid, update the record
+      Genre.findByIdAndUpdate(req.params.id, genre, {}, (err, thegenre) => {
+
+        if (err) {return next(err); }
+
+        // successfull, redirect to genre detail page
+        res.redirect(thegenre.url)
+      });
+    }
+  }
+];
