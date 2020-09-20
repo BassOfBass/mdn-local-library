@@ -1,3 +1,4 @@
+const async = require("async");
 const validator = require("express-validator");
 const BookInstance = require('../models/bookinstance');
 const Book = require('../models/book');
@@ -206,13 +207,8 @@ exports.bookinstance_update_get = (req, res, next) => {
 };
 
 
-/**
- * Handle bookinstance update on POST.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
- */
-exports.bookinstance_update_post = (req, res, next) => [
+/** Handle bookinstance update on POST. */
+exports.bookinstance_update_post = [
   // validate fields
   validator.body("book", "Book must be specified")
   .isLength({ min: 1 })
@@ -254,7 +250,7 @@ exports.bookinstance_update_post = (req, res, next) => [
         if (err) { return next(err); }
 
         // successful, so render
-        res.render("bookintstance_form", {
+        res.render("bookinstance_form", {
           title: 'Update BookInstance', 
           book_list: books, 
           selected_book: bookinstance.book._id, 
@@ -267,10 +263,10 @@ exports.bookinstance_update_post = (req, res, next) => [
 
     } else {
       // data from form is valid
-      BookInstance.findByIdAndUpdate(req.params.id, bookinstance, {}, (err, bookinstance) => {
+      BookInstance.findByIdAndUpdate(req.params.id, bookinstance, {}, (err, thebookinstance) => {
 
         if (err) { return next(err); }
-        
+
         // successful, redirect to detail page
         res.redirect(thebookinstance.url);
       });
