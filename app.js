@@ -1,9 +1,9 @@
 // import useful node libraries 
 const createError = require('http-errors');
 const express = require('express');
-/**
- * A core Node library for parsing file and directory paths.
- */
+const compression = require("compression");
+const helmet = require("helmet");
+/** A core Node library for parsing file and directory paths. */
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
@@ -33,6 +33,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression()); // compress all routes
+app.use(helmet());
 // get Express to serve all the static files in the /public directory in the project root.
 app.use(express.static(path.join(__dirname, 'public')));
 

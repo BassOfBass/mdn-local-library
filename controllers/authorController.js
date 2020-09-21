@@ -1,5 +1,6 @@
 const async = require('async');
 const validator = require("express-validator");
+const debug = require("debug")("author");
 const Book = require('../models/book');
 const Author = require('../models/author');
 
@@ -198,7 +199,10 @@ exports.author_delete_post = (req, res, next) => {
 exports.author_update_get = (req, res, next) => {
   Author.findById(req.params.id, (err, author) => {
 
-    if (err) { return next(err); }
+    if (err) { 
+      debug("Update error: " + err);
+      return next(err); 
+    }
 
     if ( author == null ) { // no results
       const err = new Error("Author not found");
