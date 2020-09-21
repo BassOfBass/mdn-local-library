@@ -17,9 +17,9 @@ const catalogRouter = require('./routes/catalog');  //Import routes for "catalog
 const app = express();
 //Set up mongoose connection
 const mongoose = require('mongoose');
-const PRIVATEDATA = require('./private-data-do-not-steal');
 
-let mongoDB = PRIVATEDATA.url;
+let dev_db_url = "mongodb+srv://humble-chief-librarian:qRSzAz4Ug4NHffG@mdn-express-meme.fsanl.mongodb.net/local-library?retryWrites=true&w=majority";
+let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
