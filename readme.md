@@ -6,7 +6,8 @@ Commands to run with nodemon on Windows:
 - `SET DEBUG=mdn-express-server:* & npm run devstart - nodemon dev launch`
 
 TODOs:
-- connect `robots.txt` before deploy
+- <del>connect `robots.txt` before deploy</del> <ins>fixed in [a68dc05a]()</ins>
+- prevent Book deletion if there are instances of it
 - rework forms according to latest memes.
 - make date forms not reset upon returned `POST` updates.
 - `author_detail.pug` - rework handling dates, especially when the birth/death dates are greater than `Date.now()`.
