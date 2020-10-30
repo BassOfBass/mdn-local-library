@@ -1,28 +1,32 @@
 // import useful node libraries 
-const createError = require('http-errors');
-const express = require('express');
-const compression = require("compression");
-const helmet = require("helmet");
-/** A core Node library for parsing file and directory paths. */
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
+import createError from 'http-errors';
+import express from 'express';
+import compression from "compression";
+import helmet from "helmet";
+//  a core Node library for parsing file and directory paths.
+import url from "url";
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import mongoose from 'mongoose';
 
 // establish routers
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const wikiRouter = require("./wiki.js");
-const catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
+import indexRouter from './routes/index.js';
+import usersRouter from './routes/users.js';
+import wikiRouter from "./routes/wiki.js";
+import catalogRouter from './routes/catalog.js';  //Import routes for "catalog" area of site
+
+// https://nodejs.org/api/esm.html#esm_no_require_exports_module_exports_filename_dirname
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 //Set up mongoose connection
-const mongoose = require('mongoose');
 
-let dev_db_url = "mongodb+srv://humble-chief-librarian:qRSzAz4Ug4NHffG@mdn-express-meme.fsanl.mongodb.net/local-library?retryWrites=true&w=majority";
-let mongoDB = process.env.MONGODB_URI || dev_db_url;
+let mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const db = mongoose.connection;
+db.addListener('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,11 +42,10 @@ app.use(helmet());
 // get Express to serve all the static files in the /public directory in the project root.
 app.use(express.static(path.join(__dirname, 'public')));
 
-// add our (previously imported) route-handling code to the request handling chain. The imported code will define particular routes for the different parts of the site:
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/wiki", wikiRouter);
-app.use('/catalog', catalogRouter);  // Add catalog routes to middleware chain.
+app.use('/catalog', catalogRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -60,4 +63,4 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-module.exports = app;
+export default app;

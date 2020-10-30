@@ -1,15 +1,16 @@
-const async = require("async");
-const validator = require("express-validator");
-const BookInstance = require('../models/bookinstance');
-const Book = require('../models/book');
+import express from "express";
+import async  from "async";
+import validator  from "express-validator";
+import BookInstance  from '../models/bookinstance.js';
+import Book  from '../models/book.js';
 
 /**
  * Display list of all BookInstances.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.bookinstance_list = (req, res, next) => {
+function bookinstance_list(req, res, next) {
 
   BookInstance.find()
   .populate('book')
@@ -25,10 +26,10 @@ exports.bookinstance_list = (req, res, next) => {
 
 /**
  * Display detail page for a specific BookInstance.
- * @param {*} req 
- * @param {*} res 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
  */
-exports.bookinstance_detail = (req, res, next) => {
+function bookinstance_detail(req, res, next) {
   BookInstance.findById(req.params.id)
   .populate('book')
   .exec((err, bookinstance) => {
@@ -48,11 +49,11 @@ exports.bookinstance_detail = (req, res, next) => {
 
 /**
  * Display BookInstance create form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.bookinstance_create_get = (req, res, next) => {
+function bookinstance_create_get(req, res, next){
 
   Book.find({}, 'title')
   .exec((err, books) => {
@@ -64,10 +65,8 @@ exports.bookinstance_create_get = (req, res, next) => {
   });
 };
 
-/**
- * Handle BookInstance create on POST.
- */
-exports.bookinstance_create_post = [
+/** Handle BookInstance create on POST. */
+const bookinstance_create_post = [
 
   // Validate fields.
   validator.body('book', 'Book must be specified').trim().isLength({ min: 1 }),
@@ -127,11 +126,11 @@ exports.bookinstance_create_post = [
 
 /**
  * Display BookInstance delete form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.bookinstance_delete_get = (req, res, next) => {
+function bookinstance_delete_get(req, res, next) {
   BookInstance.findById(req.params.id)
   .populate("book")
   .exec( (err, bookinstance) => {
@@ -152,11 +151,11 @@ exports.bookinstance_delete_get = (req, res, next) => {
 
 /**
  * Handle BookInstance delete on POST.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.bookinstance_delete_post = (req, res, next) => {
+function bookinstance_delete_post(req, res, next) {
   // assume valid BookInstance id in field
   BookInstance.findByIdAndRemove(req.body.id, (err) => {
 
@@ -169,11 +168,11 @@ exports.bookinstance_delete_post = (req, res, next) => {
 
 /**
  * Display BookInstance update form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.bookinstance_update_get = (req, res, next) => {
+function bookinstance_update_get(req, res, next) {
   // get books, authors and genres for form
   async.parallel({
     bookinstance: (callback) => {
@@ -206,9 +205,8 @@ exports.bookinstance_update_get = (req, res, next) => {
   });
 };
 
-
 /** Handle bookinstance update on POST. */
-exports.bookinstance_update_post = [
+const bookinstance_update_post = [
   // validate fields
   validator.body("book", "Book must be specified")
   .isLength({ min: 1 })
@@ -273,3 +271,14 @@ exports.bookinstance_update_post = [
     }
   }
 ];
+
+export default {
+  bookinstance_list,
+  bookinstance_detail,
+  bookinstance_create_get,
+  bookinstance_create_post,
+  bookinstance_delete_get,
+  bookinstance_delete_post,
+  bookinstance_update_get,
+  bookinstance_update_post,
+};

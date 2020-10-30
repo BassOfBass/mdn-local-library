@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const moment = require("moment");
+import mongoose from 'mongoose';
+import moment from "moment";
 
 const Schema = mongoose.Schema;
 const AuthorSchema = new Schema(
@@ -68,5 +68,7 @@ AuthorSchema
   return "Dates unknown";
 });
 
+const Author = mongoose.model('Author', AuthorSchema);
+
 //Export model
-module.exports = mongoose.model('Author', AuthorSchema);
+export default Author;

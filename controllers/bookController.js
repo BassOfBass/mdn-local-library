@@ -1,17 +1,18 @@
-const async = require("async");
-const validator = require("express-validator");
-const Book = require('../models/book');
-const Author = require('../models/author');
-const Genre = require('../models/genre');
-const BookInstance = require('../models/bookinstance');
+import express from "express";
+import async from "async";
+import validator from "express-validator";
+import Book from '../models/book.js';
+import Author from '../models/author.js';
+import Genre from '../models/genre.js';
+import BookInstance from '../models/bookinstance.js';
 
 
 /**
  * Index page info.
- * @param {*} req 
- * @param {*} res 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
  */
-exports.index = (req, res) => {
+function index(req, res) {
 
   async.parallel({
     book_count: (callback) => {
@@ -36,11 +37,11 @@ exports.index = (req, res) => {
  
 /**
  * Display list of all books.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.book_list = (req, res, next) => {
+function book_list(req, res, next) {
 
   Book.find({}, 'title author')
   .populate('author')
@@ -54,11 +55,11 @@ exports.book_list = (req, res, next) => {
 
 /**
  * Display detail page for a specific book.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.book_detail = (req, res, next) => {
+function book_detail(req, res, next) {
 
   async.parallel({
     book: (callback) => {
@@ -91,11 +92,11 @@ exports.book_detail = (req, res, next) => {
 
 /**
  * Display book create form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.book_create_get = (req, res, next) => {
+function book_create_get(req, res, next) {
 
   // Get all authors and genres, which we can use for adding to our book.
   async.parallel({
@@ -114,7 +115,7 @@ exports.book_create_get = (req, res, next) => {
 };
 
 /** Handle book create on POST. */
-exports.book_create_post = [
+const book_create_post = [
 
   // Convert the genre to an array.
   (req, res, next) => {
@@ -208,11 +209,11 @@ exports.book_create_post = [
 
 /**
  * Display book delete form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.book_delete_get = (req, res, next) => {
+function book_delete_get(req, res, next) {
   async.parallel({
     book: (callback) => {
       Book.findById(req.params.id).populate("author").populate("genre").exec(callback);
@@ -239,11 +240,11 @@ exports.book_delete_get = (req, res, next) => {
 
 /**
  * Handle book delete on POST.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.book_delete_post = (req, res, next) => {
+function book_delete_post(req, res, next) {
   // assume the post has valid id (ie no validation/sanitization)
   async.parallel({
     book: (callback) => {
@@ -283,11 +284,11 @@ exports.book_delete_post = (req, res, next) => {
 
 /**
  * Display book update form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.book_update_get = (req, res, next) => {
+function book_update_get(req, res, next) {
 
   // Get book, authors and genres for form.
   async.parallel({
@@ -333,7 +334,7 @@ exports.book_update_get = (req, res, next) => {
 };
 
 /** Handle book update on POST. */
-exports.book_update_post = [
+const book_update_post = [
 
   // Convert the genre to an array
   (req, res, next) => {
@@ -428,3 +429,15 @@ exports.book_update_post = [
     }
   }
 ];
+
+export default {
+  index,
+  book_list,
+  book_detail,
+  book_create_get,
+  book_create_post,
+  book_delete_get,
+  book_delete_post,
+  book_update_get,
+  book_update_post,
+};

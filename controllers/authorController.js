@@ -1,16 +1,19 @@
-const async = require('async');
-const validator = require("express-validator");
-const debug = require("debug")("author");
-const Book = require('../models/book');
-const Author = require('../models/author');
+import express from "express";
+import async from 'async';
+import validator from "express-validator";
+import debugLib from "debug";
+import Book from '../models/book.js';
+import Author from '../models/author.js';
+
+const debug = debugLib("author");
 
 /**
  * Display list of all Authors.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.author_list = (req, res, next) => {
+function author_list(req, res, next) {
   Author.find()
   .populate('author')
   .sort([['family_name', 'ascending']])
@@ -23,11 +26,11 @@ exports.author_list = (req, res, next) => {
 
 /**
  * Display detail page for a specific Author.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.author_detail = (req, res, next) => {
+function author_detail(req, res, next) {
 
   async.parallel({
     author: (callback) => {
@@ -57,18 +60,18 @@ exports.author_detail = (req, res, next) => {
 
 /**
  * Display Author create form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.author_create_get = (req, res, next) => {
+function author_create_get(req, res, next) {
   res.render('author_form', { title: 'Create Author' });
 };
 
 /**
  * Handle Author create on POST.
  */
-exports.author_create_post = [
+const author_create_post = [
 
   // Validate fields.
   validator.body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
@@ -123,11 +126,11 @@ exports.author_create_post = [
 
 /**
  * Display Author delete form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.author_delete_get = (req, res, next) => {
+function author_delete_get(req, res, next) {
 
   async.parallel({
     author: (callback) => {
@@ -152,11 +155,11 @@ exports.author_delete_get = (req, res, next) => {
 
 /**
  * Handle Author delete on POST.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.author_delete_post = (req, res, next) => {
+function author_delete_post(req, res, next) {
 
   async.parallel({
     author: (callback) => {
@@ -192,11 +195,11 @@ exports.author_delete_post = (req, res, next) => {
 
 /**
  * Display Author update form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.author_update_get = (req, res, next) => {
+function author_update_get(req, res, next) {
   Author.findById(req.params.id, (err, author) => {
 
     if (err) { 
@@ -221,7 +224,7 @@ exports.author_update_get = (req, res, next) => {
 };
 
 /** Handle Author update on POST. */
-exports.author_update_post = [
+const author_update_post = [
   // validate fields
   validator.body("first_name")
   .isLength({ min: 1 })
@@ -282,3 +285,14 @@ exports.author_update_post = [
     }
   }
 ];
+
+export default {
+  author_list,
+  author_detail,
+  author_create_get,
+  author_create_post,
+  author_delete_get,
+  author_delete_post,
+  author_update_get,
+  author_update_post,
+};

@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const moment = require("moment");
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+import moment from "moment";
 
+const Schema = mongoose.Schema;
 const BookInstanceSchema = new Schema(
   { 
     /** Reference to the associated book. */
@@ -25,5 +25,7 @@ BookInstanceSchema
   return moment(this.due_back).format("Do MMMM, YYYY");
 });
 
+const BookInstance = mongoose.model('BookInstance', BookInstanceSchema);
+
 //Export model
-module.exports = mongoose.model('BookInstance', BookInstanceSchema);
+export default BookInstance;

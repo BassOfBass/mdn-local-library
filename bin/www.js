@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 // Module dependencies.
-let app = require('../app');
-let debug = require('debug')('mdn-express-server:server');
-let http = require('http');
+import app from '../app.js';
+import debugLib from 'debug';
+import http from 'http';
 
+const debug = debugLib('mdn-express-server:server')
 // Get port from environment and store in Express.
 let port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -12,15 +13,17 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-let server = http.createServer(app);
+const server = http.createServer(app);
 
 // Listen on provided port, on all network interfaces.
 server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+server.addListener('error', onError);
+server.addListener('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
+ * @param {any} val
+ * @returns {number | string | false}
  */
 function normalizePort(val) {
   let port = parseInt(val, 10);

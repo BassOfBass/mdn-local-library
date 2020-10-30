@@ -1,15 +1,16 @@
-const async = require('async');
-const validator = require('express-validator');
-const Genre = require('../models/genre');
-const Book = require('../models/book');
+import express from "express";
+import async from 'async';
+import validator from 'express-validator';
+import Genre from '../models/genre.js';
+import Book from '../models/book.js';
 
 /**
  * Display list of all Genre.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.genre_list = (req, res, next) => {
+function genre_list(req, res, next) {
   Genre
   .find()
   .populate("genre")
@@ -22,11 +23,11 @@ exports.genre_list = (req, res, next) => {
 
 /**
  * Display detail page for a specific Genre.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.genre_detail = (req, res, next) => {
+function genre_detail(req, res, next) {
 
   async.parallel({
     genre: (callback) => {
@@ -55,16 +56,16 @@ exports.genre_detail = (req, res, next) => {
 
 /**
  * Display Genre create form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.genre_create_get = (req, res, next) => {
+function genre_create_get(req, res, next) {
   res.render('genre_form', { title: 'Create Genre' });
 };
 
 /** Handle Genre create on POST. */
-exports.genre_create_post = [
+const genre_create_post = [
 
   // Validate that the name field is not empty.
   validator.body('name', 'Genre name required').trim().isLength({ min: 1 }),
@@ -113,11 +114,11 @@ exports.genre_create_post = [
 
 /**
  * Display Genre delete form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.genre_delete_get = (req, res, next) => {
+function genre_delete_get (req, res, next) {
   async.parallel({
     genre: (callback) => {
       Genre.findById(req.params.id).exec(callback);
@@ -144,11 +145,11 @@ exports.genre_delete_get = (req, res, next) => {
 
 /**
  * Handle Genre delete on POST.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.genre_delete_post = (req, res, next) => {
+function genre_delete_post(req, res, next) {
   async.parallel({
     genre: (callback) => {
       Genre.findById(req.params.id).exec(callback);
@@ -183,11 +184,11 @@ exports.genre_delete_post = (req, res, next) => {
 
 /**
  * Display Genre update form on GET.
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
  */
-exports.genre_update_get = (req, res, next) => {
+function genre_update_get(req, res, next) {
   Genre.findById(req.params.id, (err, genre) => {
 
     if (err) { return next(err); }
@@ -208,7 +209,7 @@ exports.genre_update_get = (req, res, next) => {
 };
 
 /** Handle Genre update on POST. */
-exports.genre_update_post = [
+const genre_update_post = [
   // ensure the name field is not empty
   validator.body("name", "Genre name required")
   .isLength({ min: 1 })
@@ -250,3 +251,14 @@ exports.genre_update_post = [
     }
   }
 ];
+
+export default {
+  genre_list,
+  genre_detail,
+  genre_create_get,
+  genre_create_post,
+  genre_delete_get,
+  genre_delete_post,
+  genre_update_get,
+  genre_update_post,
+};

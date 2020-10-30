@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-
 const BookSchema = new Schema(
   {
     title: {type: String, required: true},
@@ -18,5 +17,7 @@ BookSchema.virtual('url')
   return '/catalog/book/' + this._id;
 });
 
+const Book = mongoose.model('Book', BookSchema);
+
 //Export model
-module.exports = mongoose.model('Book', BookSchema);
+export default Book;
