@@ -8,17 +8,17 @@
 
 :root {
   // base colours
-  --colour0-primary:hsl(0, 0%, 15%);
-  --colour0-secondary: hsl(0, 0%, 85%);
+  --colour0-primary:HSL(0, 0%, 15%);
+  --colour0-secondary: HSL(0, 0%, 85%);
 
   // links
   --anchor-base-colour: 120;
-  --anchor-primary-colour: hsl(120, 80%, 40%);
-  --anchor-secondary-colour: hsl(120, 100%, 95%);
+  --anchor-primary-colour: HSL(120, 80%, 40%);
+  --anchor-secondary-colour: HSL(120, 100%, 95%);
   // local links
   --anchor-local-base-colour: 270;
-  --anchor-local-primary-colour: hsl(270, 80%, 50%);
-  --anchor-local-secondary-colour: hsl(270, 100%, 95%);
+  --anchor-local-primary-colour: HSL(270, 80%, 50%);
+  --anchor-local-secondary-colour: HSL(270, 100%, 95%);
 
   // buttons
   --positive-colour: 120;
@@ -187,7 +187,7 @@ a {
   padding: 0.25em;
 
   &:link {
-    color: hsl(var(--base-anchor-colour), 80%, 40%);
+    color: HSL(var(--anchor-base-colour), 80%, 40%);
     text-shadow: 0 0 1px var(--colour0-primary);
   }
   
@@ -201,16 +201,16 @@ a {
     "outline-color"
     The color parts of the "fill" and "stroke" attributes
   
-    In addition, even for the above styles, you won't be able to change the transparency between unvisited and visited links, as you otherwise would be able to using rgba(), hsla(), or the transparent keyword.
+    In addition, even for the above styles, you won't be able to change the transparency between unvisited and visited links, as you otherwise would be able to using rgba(), HSLa(), or the transparent keyword.
   */
   &:visited {
-    color: hsl(var(--base-anchor-colour), 60%, 30%);
+    color: HSL(var(--anchor-base-colour), 60%, 30%);
   }
   
   &:focus,
   &:hover {
-    color: hsl(var(--base-anchor-colour), 90%, 40%);
-    background-color: hsl(var(--base-anchor-colour), 100%, 95%);
+    color: HSL(var(--anchor-base-colour), 90%, 40%);
+    background-color: HSL(var(--anchor-base-colour), 100%, 95%);
     /* 
       border-bottom has better styling options than than text-decoration 
       no color specified means it will adopt font color
@@ -220,8 +220,8 @@ a {
   }
   
   &:active {
-    color: hsl(var(--base-anchor-colour), 100%, 95%);
-    background-color: hsl(var(--base-anchor-colour), 90%, 40%);
+    color: HSL(var(--anchor-base-colour), 100%, 95%);
+    background-color: HSL(var(--anchor-base-colour), 90%, 40%);
   }
 }
 
@@ -402,12 +402,12 @@ select {
 
 input,
 textarea {
-  color: hsl(0, 0%, 0%);
+  color: HSL(0, 0%, 0%);
   /* 
     A property specific to text entry-related elements is the CSS caret-color property, which lets you set the color used to draw the text input caret: 
   */
   caret-color: inherit;
-  background-color: hsl(0, 0%, 100%);
+  background-color: HSL(0, 0%, 100%);
 }
 
 form {
@@ -478,25 +478,25 @@ input {
     <input>, <select>, or <textarea> element that has the required attribute set on it. Only matches elements that can be required. The attribute included on a non-requirable element will not make for a match. 
   */
   &:required {
-    box-shadow: 0 0 3px 3px hsl(var(--submit-colour), 100%, 50%);
+    box-shadow: 0 0 3px 3px HSL(var(--submit-colour), 100%, 50%);
   }
 
   &:focus {
-    box-shadow: 0 0 5px 5px hsl(var(--submit-colour), 100%, 50%);
+    box-shadow: 0 0 5px 5px HSL(var(--submit-colour), 100%, 50%);
   }
 
   /* 
     Form controls that have constraint validation applied and are currently not valid. Matches a form control whose value doesn't match the constraints set on it by it's attributes, such as "required", "pattern", "step" and "max". 
   */
   &:invalid {
-    border-color: hsl(var(--negative-colour), 100%, 50%);
+    border-color: HSL(var(--negative-colour), 100%, 50%);
   }
 
   /* 
     Form controls that can have constraint validation applied and are currently valid. 
   */
   &:valid {
-    border-color: hsl(var(--positive-colour), 100%, 50%);
+    border-color: HSL(var(--positive-colour), 100%, 50%);
   }
   
   
@@ -568,8 +568,8 @@ button {
   // &:focus {}
   &:active {
     box-shadow: 
-      inset -2px -2px 3px hsla(0, 0%, 100%, 0.6),
-      inset 2px 2px 3px hsla(0, 0%, 0%, 0.6);
+      inset -2px -2px 3px HSLa(0, 0%, 100%, 0.6),
+      inset 2px 2px 3px HSLa(0, 0%, 0%, 0.6);
   }
 }
 
@@ -617,18 +617,18 @@ a[href^="#"] {
   // No point for separate visited state
   &:link,
   &:visited {
-    color: hsl(var(--base-anchor-colour), 80%, 40%);
+    color: HSL(var(--anchor-base-colour), 80%, 40%);
   }
 
   &:focus,
   &:hover {
-    color: hsl(var(--base-anchor-colour), 80%, 50%);
-    background-color: hsl(var(--base-anchor-colour), 100%, 95%);
+    color: HSL(var(--anchor-base-colour), 80%, 50%);
+    background-color: HSL(var(--anchor-base-colour), 100%, 95%);
   }
 
   &:active {
-    color: hsl(var(--base-anchor-colour), 100%, 95%);
-    background-color: hsl(var(--base-anchor-colour), 80%, 50%);
+    color: HSL(var(--anchor-base-colour), 100%, 95%);
+    background-color: HSL(var(--anchor-base-colour), 80%, 50%);
   }
 }
 /* END local link */
@@ -711,19 +711,19 @@ label + input[type="file"] {
 button {
 
   &[type="submit"] {
-    color: hsl(var(--submit-colour), 100%, 25%);
-    background-color: hsl(var(--submit-colour), 80%, 70%);
+    color: HSL(var(--submit-colour), 100%, 25%);
+    background-color: HSL(var(--submit-colour), 80%, 70%);
 
     transition-duration: var(--duration-global);
 
     &:hover {
-      color: hsl(var(--submit-colour), 100%, 25%);
-      background-color: hsl(var(--submit-colour), 80%, 60%);
+      color: HSL(var(--submit-colour), 100%, 25%);
+      background-color: HSL(var(--submit-colour), 80%, 60%);
     }
 
     &:active {
-      color: hsl(var(--submit-colour), 80%, 70%);
-      background-color: hsl(var(--submit-colour), 100%, 25%);
+      color: HSL(var(--submit-colour), 80%, 70%);
+      background-color: HSL(var(--submit-colour), 100%, 25%);
     }
   }
 }
@@ -741,7 +741,7 @@ button {
   position: absolute;
   left: 50%;
   height: 30px;
-  background: hsl(30, 80%, 70%);
+  background: HSL(30, 80%, 70%);
   padding: 0.25em;
   transform: translateY(-100%);
   transition: transform 0.3s;
