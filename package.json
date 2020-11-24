@@ -10,8 +10,8 @@
   "scripts": {
     "start": "node ./bin/www.js",
     "sass": "sass --style=expanded --watch frontend/src/css:public/css",
-    "watch": "nodemon -r dotenv/config & npm run sass",
-    "dev": "SET DEBUG=mdn-express-server:* & npm run watch"
+    "watch": "SET DEBUG=mdn-express-server:* && nodemon -r dotenv/config",
+    "dev": "npm run watch & npm run sass"
   },
   "dependencies": {
     "async": "^3.2.0",
