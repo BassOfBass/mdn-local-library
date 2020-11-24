@@ -1,3 +1,4 @@
+include mixins
 doctype html
 html(lang='en')
   head
@@ -29,6 +30,11 @@ html(lang='en')
                 a(href='/catalog/book/create') Create new book
               li 
                 a(href='/catalog/bookinstance/create') Create new book instance (copy)
-                
+          li
+            p #[a(href="/blog") Blog]
+            ul
+          li
+            p #[a(href="/users") Users]
+            ul
     main#maincontent
       block content
