@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import moment from "moment";
 
-const Schema = mongoose.Schema;
+const { Schema, model } = mongoose;
 const AuthorSchema = new Schema(
   {
     first_name: {type: String, required: true, maxlength: 100},
@@ -68,7 +68,7 @@ AuthorSchema
   return "Dates unknown";
 });
 
-const Author = mongoose.model('Author', AuthorSchema);
+const Author = model('Author', AuthorSchema);
 
 //Export model
 export default Author;

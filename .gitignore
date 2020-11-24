@@ -1,4 +1,4 @@
 node_modules
 temp
-private-data-do-not-steal.js
 .env
+public/css

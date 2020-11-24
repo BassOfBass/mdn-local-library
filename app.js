@@ -1,11 +1,9 @@
-// import useful node libraries 
 import createError from 'http-errors';
 import express from 'express';
 import compression from "compression";
 import helmet from "helmet";
-//  a core Node library for parsing file and directory paths.
-import url from "url";
-import path from 'path';
+import { fileURLToPath } from "url";
+import { join, dirname } from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
@@ -14,22 +12,23 @@ import mongoose from 'mongoose';
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import wikiRouter from "./routes/wiki.js";
-import catalogRouter from './routes/catalog.js';  //Import routes for "catalog" area of site
+import catalogRouter from './routes/catalog.js';
+import BlogRouter from "./routes/blog.js";
 
 // https://nodejs.org/api/esm.html#esm_no_require_exports_module_exports_filename_dirname
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
-//Set up mongoose connection
 
+//Set up mongoose connection
 let mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection;
 db.addListener('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // add the middleware libraries into the request handling chain
@@ -40,12 +39,13 @@ app.use(cookieParser());
 app.use(compression()); // compress all routes
 app.use(helmet());
 // get Express to serve all the static files in the /public directory in the project root.
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/wiki", wikiRouter);
 app.use('/catalog', catalogRouter);
+app.use('/blog', BlogRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
