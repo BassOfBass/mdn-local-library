@@ -14,6 +14,7 @@ import usersRouter from './routes/users.js';
 import wikiRouter from "./routes/wiki.js";
 import catalogRouter from './routes/catalog.js';
 import BlogRouter from "./routes/blog.js";
+import { getCloudTags } from './libs/server/get-cloud-tags.js';
 
 // https://nodejs.org/api/esm.html#esm_no_require_exports_module_exports_filename_dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -40,6 +41,8 @@ app.use(compression()); // compress all routes
 app.use(helmet());
 // get Express to serve all the static files in the /public directory in the project root.
 app.use(express.static(join(__dirname, 'public')));
+
+app.locals.tagCloud = getCloudTags();
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

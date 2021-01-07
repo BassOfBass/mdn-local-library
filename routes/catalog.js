@@ -2,9 +2,9 @@ import express from 'express';
 
 const router = express.Router();
 // Require controller modules.
-import book_controller from '../controllers/bookController.js';
-import author_controller from '../controllers/authorController.js';
-import genre_controller from '../controllers/genreController.js';
+import book_controller from '../controllers/catalog/bookController.js';
+import author_controller from '../controllers/catalog/authorController.js';
+import genre_controller from '../controllers/catalog/genreController.js';
 import book_instance_controller from '../controllers/bookinstanceController.js';
 
 /// BOOK ROUTES ///

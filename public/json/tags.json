@@ -1,0 +1,17 @@
+[
+  { "name": "HTTP", "weight": "4", "url": "/tag/http" },
+  { "name": "Ember", "weight": "2", "url": "/tag/ember" },
+  { "name": "Sass", "weight": "5", "url": "/tag//tag/sass" },
+  { "name": "HTML", "weight": "8", "url": "/tag/html" },
+  { "name": "Flexbox", "weight": "6", "url": "/tag/flexbox" },
+  { "name": "API", "weight": "4", "url": "/tag/api" },
+  { "name": "VueJS", "weight": "5", "url": "/tag/vuejs" },
+  { "name": "Grid", "weight": "6", "url": "/tag/grid" },
+  { "name": "REST", "weight": "3", "url": "/tag/rest" },
+  { "name": "JavaScript", "weight": "9", "url": "/tag/javascript" },
+  { "name": "Animation", "weight": "3", "url": "/tag/animation" },
+  { "name": "React", "weight": "7", "url": "/tag/react" },
+  { "name": "CSS", "weight": "8", "url": "/tag/css" },
+  { "name": "Cache", "weight": "1", "url": "/tag/cache" },
+  { "name": "Less", "weight": "3", "url": "/tag/less" }
+]

@@ -1,0 +1,8 @@
+mixin tagCloud(tags, label)
+  ul.tagcloud(role="navigation", aria-label=label)
+    each tag in tags
+      li.tagitem
+        a(
+          data-weight=tag.weight, 
+          href=tag.url
+        ) #{tag.name}

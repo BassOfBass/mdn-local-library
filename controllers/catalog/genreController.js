@@ -1,8 +1,8 @@
 import express from "express";
 import async from 'async';
 import validator from 'express-validator';
-import Genre from '../models/genre.js';
-import Book from '../models/book.js';
+import Genre from '../../models/genre.js';
+import Book from '../../models/book.js';
 
 /**
  * Display list of all Genre.
@@ -17,7 +17,7 @@ function genre_list(req, res, next) {
   .sort([[ "name", "ascending" ]])
   .exec((err, list_genres) => {
     if (err) { return next(err); }
-    res.render("genre_list", { title: "Genre List", genre_list: list_genres});
+    res.render("catalog/genre_list", { title: "Genre List", genre_list: list_genres});
   });
 }
 
@@ -49,7 +49,7 @@ function genre_detail(req, res, next) {
       }
 
       // Successful, so render
-      res.render('genre_detail', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books });
+      res.render('catalog/genre_detail', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books });
     });
 
 };
@@ -61,7 +61,7 @@ function genre_detail(req, res, next) {
  * @param {express.NextFunction} next 
  */
 function genre_create_get(req, res, next) {
-  res.render('genre_form', { title: 'Create Genre' });
+  res.render('catalog/genre_form', { title: 'Create Genre' });
 };
 
 /** Handle Genre create on POST. */
@@ -135,7 +135,7 @@ function genre_delete_get (req, res, next) {
     }
 
     // successful, so render
-    res.render("genre_delete", {
+    res.render("catalog/genre_delete", {
       title: "Delete Genre",
       genre: results.genre,
       genre_books: results.genre_books
@@ -164,7 +164,7 @@ function genre_delete_post(req, res, next) {
     // success
     if (results.genre_books.length > 0) {
       // Genre has books, render the same way as GET route
-      res.render("genre_delete", {
+      res.render("catalog/genre_delete", {
         title: "Delete Genre",
         genre: results.genre,
         genre_books: results.genre_books

@@ -19,7 +19,7 @@ function bookinstance_list(req, res, next) {
     if (err) { return next(err); }
     
     // Successful, so render
-    res.render('bookinstance_list', { title: 'Book Instance List', bookinstance_list: list_bookinstances });
+    res.render('catalog/bookinstance_list', { title: 'Book Instance List', bookinstance_list: list_bookinstances });
   });
 
 };
@@ -43,7 +43,7 @@ function bookinstance_detail(req, res, next) {
       }
 
       // Successful, so render.
-      res.render('bookinstance_detail', { title: 'Copy: ' + bookinstance.book.title, bookinstance: bookinstance });
+      res.render('catalog/bookinstance_detail', { title: 'Copy: ' + bookinstance.book.title, bookinstance: bookinstance });
   });
 };
 
@@ -61,7 +61,7 @@ function bookinstance_create_get(req, res, next){
     if (err) { return next(err); }
 
     // Successful, so render.
-    res.render('bookinstance_form', { title: 'Create BookInstance', book_list: books });
+    res.render('catalog/bookinstance_form', { title: 'Create BookInstance', book_list: books });
   });
 };
 
@@ -101,7 +101,7 @@ const bookinstance_create_post = [
           if (err) { return next(err); }
 
           // Successful, so render.
-          res.render('bookinstance_form', { 
+          res.render('catalog/bookinstance_form', { 
             title: 'Create BookInstance', 
             book_list: books, 
             selected_book: bookinstance.book._id, 

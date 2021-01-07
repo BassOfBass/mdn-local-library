@@ -835,8 +835,37 @@ button {
   }
 }
 
+/* Tag cloud mixin */ 
+.tagcloud {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  padding-left: 0;
+
+  & a {
+    --size: 4;
+
+    position: relative;
+    display: block;
+    color: #a33;
+    font-size: calc(var(--size) * 0.25rem + 0.5rem);
+    text-decoration: none;
+    padding: 0.125rem 0.25rem;
+
+    &[data-weight="1"] { --size: 1; }
+    &[data-weight="2"] { --size: 2; }
+    &[data-weight="3"] { --size: 3; }
+    &[data-weight="4"] { --size: 4; }
+    &[data-weight="5"] { --size: 5; }
+    &[data-weight="6"] { --size: 6; }
+    &[data-weight="7"] { --size: 7; }
+    &[data-weight="8"] { --size: 8; }
+    &[data-weight="9"] { --size: 9; }
+  }
+}
+/* END Tag cloud mixin */ 
+
 // .localnav {}
 /* END Class rules */
-
-/* ID rules */
-/* END ID rules */

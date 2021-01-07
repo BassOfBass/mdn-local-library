@@ -2,8 +2,8 @@ import express from "express";
 import async from 'async';
 import validator from "express-validator";
 import debugLib from "debug";
-import Book from '../models/book.js';
-import Author from '../models/author.js';
+import Book from '../../models/book.js';
+import Author from '../../models/author.js';
 
 const debug = debugLib("author");
 
@@ -20,7 +20,7 @@ function author_list(req, res, next) {
   .exec((err, list_authors) => {
       if (err) { return next(err); }
       //Successful, so render
-      res.render('author_list', { title: 'Author List', author_list: list_authors });
+      res.render('catalog/author_list', { title: 'Author List', author_list: list_authors });
     });
 };
 
@@ -54,7 +54,7 @@ function author_detail(req, res, next) {
     }
 
     // Successful, so render.
-    res.render('author_detail', { title: 'Author Detail', author: results.author, author_books: results.authors_books });
+    res.render('catalog/author_detail', { title: 'Author Detail', author: results.author, author_books: results.authors_books });
   });
 };
 
@@ -65,7 +65,7 @@ function author_detail(req, res, next) {
  * @param {express.NextFunction} next 
  */
 function author_create_get(req, res, next) {
-  res.render('author_form', { title: 'Create Author' });
+  res.render('catalog/author_form', { title: 'Create Author' });
 };
 
 /**
@@ -96,7 +96,7 @@ const author_create_post = [
 
     if (!errors.isEmpty()) {
         // There are errors. Render form again with sanitized values/errors messages.
-        res.render('author_form', { title: 'Create Author', author: req.body, errors: errors.array() });
+        res.render('catalog/author_form', { title: 'Create Author', author: req.body, errors: errors.array() });
 
         return;
     }
@@ -148,7 +148,7 @@ function author_delete_get(req, res, next) {
     }
 
     // Successful, so render.
-    res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books });
+    res.render('catalog/author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books });
   });
 
 };
@@ -175,7 +175,7 @@ function author_delete_post(req, res, next) {
     // Success
     if (results.authors_books.length > 0) {
       // Author has books. Render in same way as for GET route.
-      res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books });
+      res.render('catalog/author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books });
 
       return;
 
@@ -216,7 +216,7 @@ function author_update_get(req, res, next) {
     }
 
     // success
-    res.render("author_form", {
+    res.render("catalog/author_form", {
       title: "Update Author",
       author: author
     });
@@ -265,7 +265,7 @@ const author_update_post = [
 
     if ( !errors.isEmpty() ) {
       // there are errors, render the form again with sanitized values and error messages
-      res.render("author_form", {
+      res.render("catalog/author_form", {
         title: "Update Author",
         author: author,
         errors: errors.array()

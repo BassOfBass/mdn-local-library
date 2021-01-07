@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "async": "^3.2.0",
+    "bcrypt": "^5.0.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -35,6 +36,9 @@
   },
   "nodemonConfig": {
     "verbose": true,
-    "ignore": ["public", "frontend"]
+    "ignore": [
+      "public",
+      "frontend"
+    ]
   }
 }

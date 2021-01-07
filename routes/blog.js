@@ -36,13 +36,15 @@ router.get("/:id", (req, res) => {
 });
 
 router.get("/:id/create", (req, res) => {
-  res.render("")
+  res.render("TBD");
 });
 
-router.get("", (req, res) => {});
+router.get("/:id/edit", (req, res) => {
+  res.send("TBD");
+});
 
-router.get("", (req, res) => {});
-
-router.get("", (req, res) => {});
+router.get("/:id/delete", (req, res) => {
+  res.send("TBD");
+});
 
 export default router;

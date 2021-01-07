@@ -1,10 +1,10 @@
 import express from "express";
 import async from "async";
 import validator from "express-validator";
-import Book from '../models/book.js';
-import Author from '../models/author.js';
-import Genre from '../models/genre.js';
-import BookInstance from '../models/bookinstance.js';
+import Book from '../../models/book.js';
+import Author from '../../models/author.js';
+import Genre from '../../models/genre.js';
+import BookInstance from '../../models/bookinstance.js';
 
 
 /**
@@ -31,7 +31,7 @@ function index(req, res) {
       Genre.countDocuments({}, callback);
     }
   }, (err, results) => { 
-    res.render('index', { title: 'Local Library Home', error: err, data: results });
+    res.render('catalog/index', { title: 'Local Library Home', error: err, data: results });
   });
 };
  
@@ -48,7 +48,7 @@ function book_list(req, res, next) {
   .exec((err, list_books) => {
     if (err) { return next(err); }
     //Successful, so render
-    res.render('book_list', { title: 'Book List', book_list: list_books });
+    res.render('catalog/book_list', { title: 'Book List', book_list: list_books });
   });
 
 };
@@ -85,7 +85,7 @@ function book_detail(req, res, next) {
       }
       
       // Successful, so render.
-      res.render('book_detail', { title: results.book.title, book: results.book, book_instances: results.book_instance });
+      res.render('catalog/book_detail', { title: results.book.title, book: results.book, book_instances: results.book_instance });
     });
 
 };
@@ -110,7 +110,7 @@ function book_create_get(req, res, next) {
 
       if (err) { return next(err); }
 
-      res.render('book_form', { title: 'Create Book', authors: results.authors, genres: results.genres });
+      res.render('catalog/book_form', { title: 'Create Book', authors: results.authors, genres: results.genres });
   });
 };
 
@@ -184,7 +184,7 @@ const book_create_post = [
 
             }
 
-            res.render('book_form', { 
+            res.render('catalog/book_form', { 
               title: 'Create Book', 
               authors: results.authors, 
               genres: results.genres, 
@@ -230,7 +230,7 @@ function book_delete_get(req, res, next) {
     }
 
     // successful, so render
-    res.render("book_delete", {
+    res.render("catalog/book_delete", {
       title: "Delete Book",
       book: results.book,
       book_instances: results.book_bookinstances
@@ -260,7 +260,7 @@ function book_delete_post(req, res, next) {
     // success
     if (results.book_bookinstances.length > 0) {
       // Book has book_instances, render as GET route
-      res.render("book_delete", {
+      res.render("catalog/book_delete", {
         title: "Delete Book",
         book: results.book,
         book_instances: results.book_bookinstances
@@ -324,7 +324,7 @@ function book_update_get(req, res, next) {
       }
     }
 
-    res.render('book_form', { 
+    res.render('catalog/book_form', { 
       title: 'Update Book', 
       authors: results.authors, 
       genres: results.genres, book: 
@@ -405,7 +405,7 @@ const book_update_post = [
 
           }
 
-          res.render('book_form', { 
+          res.render('catalog/book_form', { 
             title: 'Update Book', 
             authors: results.authors, 
             genres: results.genres, 
