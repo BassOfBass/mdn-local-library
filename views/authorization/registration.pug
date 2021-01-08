@@ -1,0 +1,61 @@
+extends ../layout
+
+block content
+  h1 Registration
+  section.registration
+    form(action="/authorization/registration", method="POST")
+      div
+        label(for="newname") Name *:
+        input#newname(
+          type="text", 
+          name="name", 
+          minlength="5"
+          maxlength="25"
+          pattern="[A-z0-9À-ž]+"
+          required
+          value=user.name
+        )
+      div
+        label(for="newusername") Username *:
+        input#newusername(
+          type="text", 
+          name="username", 
+          minlength="5"
+          maxlength="15"
+          pattern="[a-zA-Z0-9]+"
+          required
+          value=user.username
+        )
+      div
+        label(for="newemail") Email *:
+        //- pattern as per w3 spec:
+        //- https://www.w3.org/TR/html52/sec-forms.html#email-state-typeemail
+        input#newemail(
+          type="email", 
+          name="email", 
+          minlength="5",
+          maxlength="254",
+          pattern="[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*",
+          required,
+          value=user.email
+        )
+      div
+        label(for="newpassword") Password *:
+        input#newpassword(
+          type="password", 
+          name="password", 
+          minlength="8"
+          maxlength="50"
+          required
+        )
+      div.buttons
+        button(type="button") Register
+    
+    if errors
+      output.errors
+        ul.errorlist
+          each error of errors
+            li #{error}
+    else 
+      output
+        ul.errorlist

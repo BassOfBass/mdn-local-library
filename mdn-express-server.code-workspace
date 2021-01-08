@@ -5,6 +5,20 @@
 		}
 	],
 	"settings": {
-		"editor.tabSize": 2
-	}
+		// "editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.tabSize": 2,
+		"javascript.referencesCodeLens.enabled": true,
+		"javascript.referencesCodeLens.showOnAllFunctions": true,
+		// "[javascript]": {
+		// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+		// }
+	},
+	"extensions": {
+		"recommendations": [
+			"mikestead.dotenv",
+			"eamodio.gitlens",
+			// "esbenp.prettier-vscode"
+		],
+	},
+	
 }

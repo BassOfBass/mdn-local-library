@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  h1 Login
+  section.login
+    div.buttons
+      button(type="button")
+        label(for="") Username
+      button(type="button")
+        label(for="") Name
+      button(type="button")
+        label(for="") Password
+    form(action="/authorization/login", method="POST")
+      div
+        label(for="oldusername")
+        input#oldusername(type="text", name="username")
+      div
+        label(for="oldname")
+        input#oldname(type="text", name="name")
+      div
+        label(for="oldemail")
+        input#oldemail(type="email", name="email")
+      div
+        label(for="oldpassword")
+        input#oldpassword(type="password", name="password")
+      div.buttons
+        button(type="submit") Log in
+
+    if errors 
+      output.errors
+        ul.errorlist
+          each error of errors
+            li #{error}
+    else 
+      output
+        ul.errorlist
+    

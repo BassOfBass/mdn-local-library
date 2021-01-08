@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h1 User list
+  section.userlist
+    each user of users
+      article
+        header
+          h2 #{user.username}
+        section
+          p Name: #{user.name}
+          p Email: #{user.email}
+        footer
+          p Joined: #[time(datetime=user.createdAt) #{user.createdAt}]

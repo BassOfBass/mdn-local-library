@@ -5,7 +5,7 @@ const router = express.Router();
 import book_controller from '../controllers/catalog/bookController.js';
 import author_controller from '../controllers/catalog/authorController.js';
 import genre_controller from '../controllers/catalog/genreController.js';
-import book_instance_controller from '../controllers/bookinstanceController.js';
+import book_instance_controller from '../controllers/catalog/bookinstanceController.js';
 
 /// BOOK ROUTES ///
 

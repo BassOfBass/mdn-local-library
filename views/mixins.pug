@@ -6,3 +6,15 @@ mixin tagCloud(tags, label)
           data-weight=tag.weight, 
           href=tag.url
         ) #{tag.name}
+
+mixin errorList(errors)
+  if errors
+    output.errors.items
+      p Errors:
+      ul.errorlist
+        each error of errors
+          li #{error}
+  else 
+    output.errors
+      p Errors:
+      ul.errorlist

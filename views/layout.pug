@@ -2,16 +2,27 @@ include mixins
 doctype html
 html(lang='en')
   head
-    title= title
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name="description", content=description)
     link(rel='stylesheet', href='/css/index.css')
+    title #{title}
   body
-    header
-      nav
-        ul(class='sidebar-nav')
-          li
-            p #[a(href='/catalog') Catalogue]
+    input#styleswitcher.styleswitcher(type="checkbox", name="styles", hidden)
+    div.gwrapper
+      header.gheader
+        div.gtop
+          div #[a.glogo(href="/") MDN]
+        nav
+          details
+            summary #[a(href="/authorization") Authorization] 
+            ul
+              li #[a(href="/authorization/register") Register]
+              li #[a(href="/authorization/login") Log in]
+              li #[a(href="/authorization/logout") Log out]
+
+          details
+            summary #[a(href='/catalog') Catalogue]
             ul
               li 
                 a(href='/catalog/books') All books
@@ -30,14 +41,21 @@ html(lang='en')
                 a(href='/catalog/book/create') Create new book
               li 
                 a(href='/catalog/bookinstance/create') Create new book instance (copy)
-          li
-            p #[a(href="/blog") Blog]
+
+          details
+            summary #[a(href="/blog") Blog]
             ul
-          li
-            p #[a(href="/users") Users]
+
+          details
+            summary #[a(href="/users") Users]
             ul
-    main#maincontent
-      block content
-    
-    footer
-      +tagCloud(tagCloud, "webdev tag cloud")
+
+      main#maincontent
+        block content
+      
+      footer.gfooter
+        +tagCloud(tagCloud, "webdev tag cloud")
+        div.buttons
+          button.glightswitcher(type="button")
+            label(for="styleswitcher") Switch
+          

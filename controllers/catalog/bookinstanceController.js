@@ -1,8 +1,8 @@
 import express from "express";
 import async  from "async";
 import validator  from "express-validator";
-import BookInstance  from '../models/bookinstance.js';
-import Book  from '../models/book.js';
+import BookInstance  from '../../models/bookinstance.js';
+import Book  from '../../models/book.js';
 
 /**
  * Display list of all BookInstances.
