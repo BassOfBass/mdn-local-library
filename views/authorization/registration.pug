@@ -3,17 +3,18 @@ extends ../layout
 block content
   h1 Registration
   section.registration
-    form(action="/authorization/registration", method="POST")
+    form(method="POST")
       div
         label(for="newname") Name *:
         input#newname(
           type="text", 
-          name="name", 
+          name="name",
           minlength="5"
           maxlength="25"
           pattern="[A-z0-9À-ž]+"
-          required
-          value=user.name
+          autocomplete="name"
+          value=`${user ? user.name : ""}`,
+          required,
         )
       div
         label(for="newusername") Username *:
@@ -22,9 +23,10 @@ block content
           name="username", 
           minlength="5"
           maxlength="15"
-          pattern="[a-zA-Z0-9]+"
-          required
-          value=user.username
+          pattern="[a-z0-9]+",
+          autocomplete="username"
+          value=`${user ? user.username : ""}`
+          required,
         )
       div
         label(for="newemail") Email *:
@@ -33,23 +35,25 @@ block content
         input#newemail(
           type="email", 
           name="email", 
-          minlength="5",
+          minlength="6",
           maxlength="254",
           pattern="[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*",
           required,
-          value=user.email
+          autocomplete="email"
+          value=`${user ? user.email : ""}`
         )
       div
         label(for="newpassword") Password *:
         input#newpassword(
           type="password", 
           name="password", 
-          minlength="8"
-          maxlength="50"
+          minlength="8",
+          maxlength="50",
+          autocomplete="new-password",
           required
         )
       div.buttons
-        button(type="button") Register
+        button(type="submit") Register
     
     if errors
       output.errors

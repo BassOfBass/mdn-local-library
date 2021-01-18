@@ -6,18 +6,24 @@ import {
   postRegistration,
   validateAuthorization,
   getLogin,
-  postLogin
+  postLogin,
+  getLogout
 } from "../controllers/authorization/authorizationController.js"
 
 const router = express.Router();
 
 router.get("/", getAuthorizationOverview);
-router.get("/registration", getRegistration);
+router.get("/register", getRegistration);
 router.post(
-  "/registration",
+  "/register",
   validateAuthorization(postRegistration),
   postRegistration
 );
 router.get("/login", getLogin);
-router.post("/login", postLogin);
+router.post(
+  "/login", 
+  validateAuthorization(postLogin),
+  postLogin
+);
+router.get("/logout", getLogout);
 export default router;

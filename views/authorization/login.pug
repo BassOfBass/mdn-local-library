@@ -3,35 +3,43 @@ extends ../layout
 block content
   h1 Login
   section.login
-    div.buttons
-      button(type="button")
-        label(for="") Username
-      button(type="button")
-        label(for="") Name
-      button(type="button")
-        label(for="") Password
+    //- div.buttons
+    //-   button.hiddenswitch(type="button")
+    //-     label.hiddenlabel(for="usernameopt") Username
+    //-   button.hiddenswitch(type="button")
+    //-     label.hiddenlabel(for="nameopt") Name
+    //-   button.hiddenswitch(type="button")
+    //-     label.hiddenlabel(for="emailopt") Email
     form(action="/authorization/login", method="POST")
+      //- input#usernameopt.hiddenswitcher(type="radio", name="loginopts", hidden, checked)
+      //- div
+      //-   label(for="oldusername") Username *:
+      //-   input#oldusername(type="text", name="username")
+
+      //- input#nameopt.hiddenswitcher(type="radio", name="loginopts", hidden)
+      //- div
+      //-   label(for="oldname") Name *:
+      //-   input#oldname(type="text", name="name")
+
+      //- input#emailopt.hiddenswitcher(type="radio", name="loginopts", hidden)        
       div
-        label(for="oldusername")
-        input#oldusername(type="text", name="username")
+        label(for="oldemail") Email *:
+        input#oldemail(
+          type="email", 
+          name="email",
+          autocomplete="email"
+          required
+        )
       div
-        label(for="oldname")
-        input#oldname(type="text", name="name")
-      div
-        label(for="oldemail")
-        input#oldemail(type="email", name="email")
-      div
-        label(for="oldpassword")
-        input#oldpassword(type="password", name="password")
+        label(for="oldpassword") Password *:
+        input#oldpassword(
+          type="password", 
+          name="password", 
+          autocomplete="current-password",
+          required
+        )
       div.buttons
         button(type="submit") Log in
 
-    if errors 
-      output.errors
-        ul.errorlist
-          each error of errors
-            li #{error}
-    else 
-      output
-        ul.errorlist
+    +errorList(errors)
     

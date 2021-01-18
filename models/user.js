@@ -29,11 +29,12 @@ userSchema.pre("save", async function(next) {
   }
 });
 
-userSchema.static("authenticate", async function(username, email, plainTextPassword) {
+userSchema.static("authenticate", async function(username, email, name, plainTextPassword) {
   const user = await this.findOne({ 
     $or: [ 
-      { email }, 
-      { username } 
+      { name },
+      { username },
+      { email }
     ]
   });
 

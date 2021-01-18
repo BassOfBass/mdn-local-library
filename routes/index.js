@@ -2,8 +2,11 @@ import express from 'express';
 
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res) => {
+  
+  if (!req.isAuthenticated()) {
+    return res.redirect("/authorization/login");
+  }
   res.render("index");
 });
 

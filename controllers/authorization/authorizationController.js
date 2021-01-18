@@ -1,6 +1,8 @@
 import expressValidator from "express-validator";
+import passport from "passport";
 
 import User from "../../models/user.js";
+import { userLoginValidation } from "../../libs/general/validation-schemas/user.js";
 
 /**
  * @param {import("express").Request} req 
@@ -17,7 +19,11 @@ export function getAuthorizationOverview(req, res) {
  * @param {import("express").Response} res 
  */
 export function getRegistration(req, res) {
-  res.render("authorization/register", {
+
+  if (req.isAuthenticated()) {
+    return res.redirect("/register");
+  }
+  res.render("authorization/registration", {
     title: "registration page"
   });
 }
@@ -36,7 +42,6 @@ export async function postRegistration(req, res, next) {
       errors: errors.array()
     });
   }
-
 
   const { name, username, email, password } = req.body;
 
@@ -69,6 +74,11 @@ export async function postRegistration(req, res, next) {
  * @param {import("express").Response} res 
  */
 export function getLogin(req, res) {
+  
+  if (req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+
   res.render("authorization/login", {
     title: "login page"
   })
@@ -89,6 +99,25 @@ export function postLogin(req, res, next) {
       errors: errors.array()
     })
   }
+
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+    successRedirect: "/",
+    failureFlash: "User not found"
+  },
+  (error, req, res, next) => {
+    if (error) next(error);
+  })
+  
+}
+
+/**
+ * @param {import("express").Request} req 
+ * @param {import("express").Response} res 
+ */
+export function getLogout(req, res) {
+  req.logOut();
+  res.redirect("/login")
 }
 
 /**
@@ -124,7 +153,9 @@ export function validateAuthorization(method) {
       .withMessage("Password should be between 8 to 50 characters long."),
     ];
       
-    case postLogin.name: return []
+    case postLogin.name: 
+      return expressValidator.checkSchema(userLoginValidation);
+       
     default:
       break;
   }

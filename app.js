@@ -14,6 +14,8 @@ import passport from "passport";
 
 // local imports
 import { getCloudTags } from './libs/server/get-cloud-tags.js';
+import { initializePassport } from "./libs/server/authorization.js"; 
+
 
 // establish routers
 import indexRouter from './routes/index.js';
@@ -68,16 +70,18 @@ app.use(session({
   cookie: {
     secure: false
   }
-}))
+}));
 
-app.locals.tagCloud = getCloudTags();
+initializePassport(app, passport);
+
+// app.locals.tagCloud = getCloudTags();
 
 app.use('/', indexRouter);
+app.use("/authorization", authRouter);
 app.use('/users', usersRouter);
 app.use("/wiki", wikiRouter);
 app.use('/catalog', catalogRouter);
 app.use('/blog', blogRouter);
-app.use("/authorization", authRouter);
 app.use("/api", apiRouter);
 
 // catch 404 and forward to error handler
